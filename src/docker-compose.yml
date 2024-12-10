@@ -1,11 +1,22 @@
-version: '3.9'
+version: '3.8'
+
 services:
   nginx:
-    build:
-      context: ./nginx_service
-      dockerfile: Dockerfile
+    image: nginx:latest
+    container_name: hidden_service_nginx
     ports:
       - "8080:80"
     volumes:
-      - ./nginx_service/index.html:/usr/share/nginx/html/index.html:ro
-    restart: always
+      - ./html:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    restart: unless-stopped
+
+  tor:
+    image: jess/tor:latest
+    container_name: hidden_service_tor
+    volumes:
+      - ./tor_service/torrc:/etc/torrc
+      - ./tor_data:/var/lib/tor
+    command: ["tor", "-f", "/etc/torrc"]
+    user: root
+    restart: unless-stopped
