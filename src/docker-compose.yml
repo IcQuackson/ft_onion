@@ -19,3 +19,16 @@ services:
     user: root
     restart: unless-stopped
 
+  ssh:
+    image: linuxserver/openssh-server
+    container_name: ssh_server
+    ports:
+      - "2222:22"
+    environment:
+      - USER_NAME=${USER_NAME}
+      - USER_PASSWORD=${USER_PASSWORD}
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - PASSWORD_ACCESS=true
+    restart: unless-stopped
