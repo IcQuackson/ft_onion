@@ -12,11 +12,10 @@ services:
     restart: unless-stopped
 
   tor:
-    image: jess/tor:latest
+    build:
+      context: ./tor
+      dockerfile: Dockerfile
     container_name: hidden_service_tor
-    volumes:
-      - ./tor_service/torrc:/etc/torrc
-      - ./tor_data:/var/lib/tor
-    command: ["tor", "-f", "/etc/torrc"]
     user: root
     restart: unless-stopped
+
