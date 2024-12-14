@@ -1,0 +1,26 @@
+# Disable root login
+PermitRootLogin no
+
+# Limit password authentication attempts
+MaxAuthTries 3
+
+# Allow only specific users
+AllowUsers alice bob
+
+# Disable empty passwords
+PermitEmptyPasswords no
+
+# Timeout idle connections
+ClientAliveInterval 180
+
+# Disable SSH version 1
+#Protocol 2
+
+# Disable password login (if using SSH keys only)
+PasswordAuthentication yes
+#PubkeyAuthentication yes
+
+UsePAM yes
+
+# Enable logging
+LogLevel VERBOSE
