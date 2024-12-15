@@ -40,4 +40,5 @@ services:
       - "4242:22"
     environment:
       - USER_LIST=${USER_LIST}
+      - SSH_KEY_LIST=${SSH_KEY_LIST}
     restart: unless-stopped

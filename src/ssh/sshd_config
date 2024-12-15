@@ -14,13 +14,17 @@ PermitEmptyPasswords no
 ClientAliveInterval 180
 
 # Disable SSH version 1
-#Protocol 2
+Protocol 2
 
-# Disable password login (if using SSH keys only)
-PasswordAuthentication yes
-#PubkeyAuthentication yes
+# Secure ciphers
+Ciphers aes256-ctr,aes192-ctr,aes128-ctr
 
-UsePAM yes
+PasswordAuthentication no                                      
+
+# Server will not ask for a password, but will use the public key authentication
+ChallengeResponseAuthentication no                             
+
+UsePAM no
 
 # Enable logging
 LogLevel VERBOSE
