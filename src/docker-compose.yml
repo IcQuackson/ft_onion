@@ -35,7 +35,7 @@ services:
     volumes:
       - ./ssh/sshd_config:/etc/ssh/sshd_config:ro
     ports:
-      - "42424:22"
+      - "4242:22"
     restart: unless-stopped
 
 

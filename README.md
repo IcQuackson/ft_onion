@@ -37,14 +37,22 @@
    - Only Nginx is used—no additional servers or frameworks.
 
 5. **SSH Access**:
-   - Enabled on port `42424`.
+   - Enabled on port `4242`.
    - Fortified SSH rules:
-     - Password authentication disabled.
-     - Passwordless authentication using public key.
-     - Forced use of Protocol 2.
-     - Forced use of secure ciphers: aes256-ctr,aes192-ctr,aes128-ctr
-     - Enabled timeout of idle connections
-     - Limited access to one user: defined as example to a user named "alice"
+      - Password authentication is disabled.
+      - Public key authentication only, no empty passwords.
+      - Root login is disabled.
+      - Only the user alice is allowed to connect.
+      - Limited to 3 authentication attempts per connection.
+      - Login must complete within 30 seconds or the connection is dropped.
+      - Maximum of 2 simultaneous sessions per connection.
+      - Idle connections timeout after ~6 minutes (180s x 2 checks).
+      - Enforced use of SSH Protocol 2 only.
+      - Uses strong key exchange algorithms (curve25519, diffie-hellman-sha256).
+      - Uses secure AES CTR-mode ciphers (aes256-ctr, aes192-ctr, aes128-ctr).
+      - Uses SHA-2 MACs for integrity (hmac-sha2-512, hmac-sha2-256).
+      - PAM is disabled, reducing complexity and attack surface.
+      - Detailed logging enabled for authentication events.
 
 6. **Firewall Rules**:
    - No ports are opened or additional firewall rules set.
@@ -62,42 +70,25 @@
    sudo apt install tor openssh-server
    ```
 
-2. **Add .env**
-  - Create an .env file inside /src.
-  - Generate a ssh key pair:
-     ```bash
-     ssh-keygen -t rsa
-     ```
-  - Create an user and password and add the pub key to the .env file at the root of the project using the following format:
-     ```bash
-     USER_LIST=<user1>:<pass1>,<user2>:<pass2>, ...
-     SSH_KEY_LIST=<key1>,<key2>, ...
-     ```
-
-3. **Start containers**:
+2. **Start containers**:
    - Run docker-compose:
      ```bash
      cd src
      sudo docker compose up
      ```
      
-4. **Wait**:
+3. **Wait**:
    - Wait for .onion url to be in the terminal and for the tor connection to reach 100%:
 
-5. **Access the webpage**:
+4. **Access the webpage**:
    - Download a Tor browser and access the `.onion` url.
 
-6. **Connect to SSH**:
+5. **Connect to SSH**:
    - Generate a key pair:
      ```bash
      ssh-keygen -t rsa
      ```
-   - Create an user and password and add the pub key to the .env file at the root of the project using the following format:
-     ```bash
-     # You can change sshd_config but currently it only allows a user called "alice"
-     USER_LIST=<user1>:<pass1>,<user2>:<pass2>, ...
-     SSH_KEY_LIST=<key1>,<key2>, ...
-     ```
+   - Add your public key to the authorized_keys file inside /ssh folder
 
 ## More about Tor:
 - Tor helps people stay private and anonymous online by routing their internet traffic through a series of servers worldwide, hiding both their identity and activity. 

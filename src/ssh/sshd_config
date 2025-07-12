@@ -1,30 +1,31 @@
-# Disable root login
 PermitRootLogin no
 
-# Limit password authentication attempts
 MaxAuthTries 3
 
-# Allow only specific users
-AllowUsers alice bob
+MaxSessions 2
 
-# Disable empty passwords
-PermitEmptyPasswords no
+LoginGraceTime 30
 
-# Timeout idle connections
 ClientAliveInterval 180
 
-# Disable SSH version 1
+ClientAliveCountMax 2
+
+AllowUsers alice
+
+PermitEmptyPasswords no
+
 Protocol 2
 
-# Secure ciphers
+KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
+
 Ciphers aes256-ctr,aes192-ctr,aes128-ctr
+
+MACs hmac-sha2-512,hmac-sha2-256
 
 PasswordAuthentication no                                      
 
-# Server will not ask for a password, but will use the public key authentication
 ChallengeResponseAuthentication no                             
 
 UsePAM no
 
-# Enable logging
 LogLevel VERBOSE
