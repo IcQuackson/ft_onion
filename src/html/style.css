@@ -1,0 +1,29 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+  color: white;
+  font-family: sans-serif;
+}
+
+canvas {
+  border: 2px solid #fff;
+  background: #111;
+}
+
+.scoreboard {
+  position: absolute;
+  top: 20px;
+  text-align: center;
+  width: 100%;
+  font-size: 24px;
+  font-weight: bold;
+}

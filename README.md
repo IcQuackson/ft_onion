@@ -32,12 +32,12 @@
    - A single `index.html` file is served by Nginx on HTTP.
 
 3. **Nginx Web Server**:
-   - Enabled on port `80`
+   - Enabled on port `8080`
    - Configured to serve the web page.
    - Only Nginx is used—no additional servers or frameworks.
 
 5. **SSH Access**:
-   - Enabled on port `4242`.
+   - Enabled on port `42424`.
    - Fortified SSH rules:
      - Password authentication disabled.
      - Passwordless authentication using public key.

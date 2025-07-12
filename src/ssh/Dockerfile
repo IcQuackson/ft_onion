@@ -1,22 +1,23 @@
 FROM ubuntu:latest
 
-# Install openssh-server and clean up apt cache
-RUN apt-get update && apt-get upgrade -y && \
+RUN apt-get update && \
     apt-get install -y openssh-server telnet torsocks && \
     rm -rf /var/lib/apt/lists/*
 
-# Create the run directory for sshd
 RUN mkdir -p /var/run/sshd
 
-# Copy the entrypoint script into the image
-COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+RUN useradd -m -s /bin/bash alice && \
+    echo 'alice:securepassword' | chpasswd
 
-# Expose SSH port
+RUN mkdir -p /home/alice/.ssh && \
+    chmod 700 /home/alice/.ssh
+
+COPY authorized_keys /home/alice/.ssh/authorized_keys
+
+RUN chown -R alice:alice /home/alice/.ssh && \
+    chmod 600 /home/alice/.ssh/authorized_keys
+
+
 EXPOSE 22
 
-# Set the entrypoint
-ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
-
-# By default, run SSH daemon in the foreground
 CMD ["/usr/sbin/sshd", "-D"]
